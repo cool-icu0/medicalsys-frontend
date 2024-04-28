@@ -20,13 +20,17 @@ declare module 'vue' {
     VanEmpty: typeof import('vant/es')['Empty']
     VanField: typeof import('vant/es')['Field']
     VanForm: typeof import('vant/es')['Form']
+    VanGrid: typeof import('vant/es')['Grid']
+    VanGridItem: typeof import('vant/es')['GridItem']
     VanIcon: typeof import('vant/es')['Icon']
     VanImage: typeof import('vant/es')['Image']
     VanNavBar: typeof import('vant/es')['NavBar']
     VanNumberKeyboard: typeof import('vant/es')['NumberKeyboard']
+    VanPopup: typeof import('vant/es')['Popup']
     VanRow: typeof import('vant/es')['Row']
     VanSwitch: typeof import('vant/es')['Switch']
     VanTabbar: typeof import('vant/es')['Tabbar']
     VanTabbarItem: typeof import('vant/es')['TabbarItem']
+    VanTag: typeof import('vant/es')['Tag']
   }
 }

@@ -87,8 +87,6 @@ const onSubmit = async () => {
   const res = await myAxios.post('/user/login',
     user.value,
   );
-  console.log(res, '用户登录');
-  console.log(res.data, '用户登录接口');
   if (res.data.code === 200 && res.data.data) {
     Toast.success('登录成功');
     userStore.login(user.value.userAccount);
@@ -99,7 +97,7 @@ const onSubmit = async () => {
 };
 //提交注册请求
 const GoRegister= async ()=>{
-  await router.push('/register')
+  await router.push('/user/register')
 }
 </script>
 

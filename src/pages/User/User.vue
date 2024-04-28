@@ -2,7 +2,7 @@
   <div>
     <template v-if="isLoggedIn">
       <!-- 用户已登录，显示用户信息界面 -->
-      <UserInfo />
+      <UserMain />
     </template>
     <template v-else>
       <!-- 用户未登录，显示注册界面 -->
@@ -14,7 +14,7 @@
 <script setup>
 
 import UserLogin from "./UserLogin.vue";
-import UserInfo from "./UserInfo.vue";
+import UserMain from "./UserMain.vue";
 import {useUserStore} from "../../config/store.js";
 
 const userStore = useUserStore();
