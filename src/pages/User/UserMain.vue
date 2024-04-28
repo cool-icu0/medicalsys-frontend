@@ -32,13 +32,25 @@
       <van-cell title="用户反馈" is-link to="/feedback" />
       <van-cell title="小智同学" is-link to="/xiaozhi" />
     </van-cell-group>
+    <div style="height: 20px"></div>
+    <!--退出登录-->
+    <van-button class="userLogout" color="linear-gradient(to right, #ff6034, #ee0a24)" @click="logout()">
+      退出登录
+    </van-button>
+
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-
+import {useUserStore} from "../../config/store.js";
+//获取store信息
+const userStore = useUserStore();
+// const isLoggedIn = userStore.isLoggedIn;
+// const userAccount =userStore.userAccount;
+// console.log("Login？",isLoggedIn);
+// console.log("userAccount",userAccount);
 const router = useRouter();
 const user = ref({
   userAccount: 'admin',
@@ -74,6 +86,11 @@ const getTagRole = (role) => {
 const openAvatar = async () => {
   await router.push('/user/info');
 };
+// 退出登录
+const logout= async ()=>{
+  userStore.logout()
+  await router.push('/user')
+}
 </script>
 
 <style scoped>
@@ -89,6 +106,24 @@ const openAvatar = async () => {
 }
 .msg {
   display: flex;
+}
+.userLogout {
+  text-align: center;
+  display: inline-block;
+  width: 80%;
+  margin-left: 35px;
+  background: linear-gradient(to right, #ff6034, #ee0a24); /* 渐变背景色 */
+  color: white; /* 文字颜色 */
+  border: none; /* 移除边框 */
+  border-radius: 20px; /* 圆角 */
+  font-size: 16px; /* 字体大小 */
+  padding: 20px 20px; /* 内边距 */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, .1); /* 添加阴影效果 */
+  transition: box-shadow 0.3s ease-in-out; /* 平滑阴影过渡效果 */
+}
+
+.userLogout:hover {
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* 鼠标悬浮时阴影效果增强 */
 }
 .user-info span {
 }

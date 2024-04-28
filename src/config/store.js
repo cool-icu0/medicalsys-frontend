@@ -18,7 +18,7 @@ export const useUserStore = defineStore({
         },
 
         // 用户登出操作
-        logout(userAccount) {
+        logout() {
             this.isLoggedIn = false;
             localStorage.setItem('isLoggedIn', 'false'); // 登出时将登录状态更新并存储到 localStorage
 

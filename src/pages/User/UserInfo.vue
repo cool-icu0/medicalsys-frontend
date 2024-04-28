@@ -17,7 +17,12 @@
 <script setup lang="ts">
 
 import {useRouter} from "vue-router";
-
+//获取store信息
+// const userStore = useUserStore();
+// const isLoggedIn = userStore.isLoggedIn;
+// const userAccount =userStore.userAccount;
+// console.log("Login？",isLoggedIn);
+// console.log("userAccount",userAccount);
 const user={
   username:'Cool',
   userAccount:'cool1234',
