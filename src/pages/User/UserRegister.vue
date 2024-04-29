@@ -82,7 +82,6 @@ onMounted(()=>{
 })
 //提交注册请求
 import {useUserStore} from "../../config/store.js";
-import {showDialog, showFailToast} from "vant";
 const userStore = useUserStore();
 const onSubmit = async () => {
   console.log("user:",user.value)
@@ -91,7 +90,7 @@ const onSubmit = async () => {
   );
   if (res.data.code === 200 && res.data.data) {
     Toast.success('注册成功');
-    router.replace('/user/login');
+    await router.replace('/user/login');
   } else {
     Toast.fail('注册失败');
   }

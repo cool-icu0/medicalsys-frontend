@@ -20,6 +20,6 @@ import {useUserStore} from "../../config/store.js";
 const userStore = useUserStore();
 const isLoggedIn = userStore.isLoggedIn;
 const userAccount =userStore.userAccount;
-console.log("Login？",isLoggedIn);
-console.log("userAccount",userAccount);
+// console.log("Login？",isLoggedIn);
+// console.log("userAccount",userAccount);
 </script>

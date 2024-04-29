@@ -42,24 +42,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {onMounted, ref} from 'vue';
 import { useRouter } from 'vue-router';
 import {useUserStore} from "../../config/store.js";
+import myAxios from "../../config/myAxios.js";
+import {Toast} from "@vant/compat";
 //获取store信息
 const userStore = useUserStore();
-// const isLoggedIn = userStore.isLoggedIn;
-// const userAccount =userStore.userAccount;
-// console.log("Login？",isLoggedIn);
-// console.log("userAccount",userAccount);
+const isLoggedIn = userStore.isLoggedIn;
+const userAccount =userStore.userAccount;
 const router = useRouter();
 const user = ref({
-  userAccount: 'admin',
-  username: '菜狗',
-  userAvatar: 'https://foruda.gitee.com/avatar/1676566705652498709/9913536_xiao-chenago_1676566705.png!avatar200',
-  signature: '爱打篮球,菜就多练',
+  userAccount:'',
+  username: '',
+  userAvatar: '',
+  signature: '',
   gender: 1,
   role: 0
 });
+onMounted(()=>
+  getData(userAccount),
+)
+const getData= async (userAccount)=>{
+  const res = await myAxios.get(`/user/select/${userAccount}`);
+  if (res.data.code === 200 && res.data.data) {
+    console.log(res.data.data)
+    user.value.username = res.data.data.username;
+    user.value.userAvatar = res.data.data.userAvatar;
+    user.value.signature = res.data.data.signature;
+    user.value.gender = res.data.data.gender;
+    user.value.role = res.data.data.role;
+  }
+}
 
 // 根据性别获取标签类型
 const getTagType = (gender) => {
@@ -89,7 +103,7 @@ const openAvatar = async () => {
 // 退出登录
 const logout= async ()=>{
   userStore.logout()
-  await router.push('/user')
+  await router.push('/user/login')
 }
 </script>
 

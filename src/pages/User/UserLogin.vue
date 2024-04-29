@@ -90,7 +90,7 @@ const onSubmit = async () => {
   if (res.data.code === 200 && res.data.data) {
     Toast.success('登录成功');
     userStore.login(user.value.userAccount);
-    router.replace('/');
+    await router.replace('/user/main');
   } else {
     Toast.fail('登录失败');
   }
