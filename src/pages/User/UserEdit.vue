@@ -17,19 +17,40 @@
 
 <script setup>
 import {useRoute, useRouter} from "vue-router";
-import {ref} from "vue";
+import {ref, watch} from "vue";
+import myAxios from "../../config/myAxios.js";
+import {useUserStore} from "../../config/store.js";
 
 const route = useRoute();
 const router = useRouter();
-
+const userStore = useUserStore();
+const isLoggedIn = userStore.isLoggedIn;
+const userAccount =userStore.userAccount;
 const editUser = ref({
   editKey: route.query.editKey,
   currentValue: route.query.currentValue,
   editName: route.query.editName,
 })
-const onSubmit=(values)=>{
-  console.log('onSubmit',values)
+const user =ref({
+  userAccount:userAccount,
+})
+// 动态为 user 添加属性和值
+if (editUser.value.editKey && editUser.value.currentValue) {
+  user.value[editUser.value.editKey] = editUser.value.currentValue;
 }
+const onSubmit= async (values)=>{
+  console.log('onSubmit',values)
+  const res = await myAxios.post('/user/update',
+      user.value,
+  )
+  console.log("user",user)
+}
+watch(
+    () => editUser.value.currentValue,
+    (newValue) => {
+      user.value[editUser.value.editKey] = newValue;
+    }
+);
 </script>
 
 <style scoped>
