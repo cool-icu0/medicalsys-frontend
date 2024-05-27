@@ -26,5 +26,5 @@ myAxios.interceptors.response.use(function (response) {
     // 对响应错误做点什么
     return Promise.reject(error);
 });
-
+axios.defaults.withCredentials = true
 export default myAxios;

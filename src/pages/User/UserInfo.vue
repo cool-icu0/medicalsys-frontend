@@ -6,7 +6,7 @@
     <img style="height: 48px" :src="user.userAvatar"/>
   </van-cell>
   <van-cell title="年龄" is-link to="/user/edit" :value="user.age" @click="toEdit('age', '年龄', user.age)"/>
-  <van-cell title="性别" is-link :value="user.gender" @click="toEdit('gender', '性别', user.gender)"/>
+  <van-cell title="性别" is-link :value="getGenderText(user.gender)" @click="toEdit('gender', '性别', user.gender)"/>
   <van-cell title="电话" is-link to="/user/edit" :value="user.phone" @click="toEdit('phone', '电话', user.phone)"/>
   <van-cell title="邮箱" is-link to="/user/edit" :value="user.email" @click="toEdit('email', '邮箱', user.email)"/>
   <van-cell title="个性签名" is-link to="/user/edit" :value="user.signature" @click="toEdit('signature', '个性签名', user.signature)"/>
@@ -68,6 +68,17 @@ const getData= async (userAccount)=>{
 onMounted( async ()=>
     getData(userAccount),
 )
+//性别判断
+const getGenderText = (gender)=> {
+  switch(gender) {
+    case 1:
+      return '男';
+    case 2:
+      return '女';
+    default:
+      return '未知';
+  }
+}
 //日期格式化
 const formatBirthday = (birthday) => {
   const date = new Date(birthday);

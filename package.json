@@ -11,15 +11,18 @@
   "dependencies": {
     "@vant/compat": "^1.0.0",
     "axios": "^1.6.8",
+    "js-audio-recorder": "^1.0.7",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "qs": "^6.12.1",
     "vant": "^4.8.11",
     "vue": "^3.3.4",
-    "vue-router": "^4.3.2"
+    "vue-router": "^4.3.2",
+    "websocket": "^1.0.35"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",
+    "@vueuse/core": "^10.9.0",
     "typescript": "^5.0.2",
     "unplugin-vue-components": "^0.26.0",
     "vite": "^4.4.5",
