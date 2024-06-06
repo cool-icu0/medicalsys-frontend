@@ -117,10 +117,10 @@ const user = ref({
 })
 const contents = ref([
   {messageId: '1', toName: 'zhangsan',
-    img: 'https://profile-avatar.csdnimg.cn/cec5c664c7394beca664dc74ed8e3e33_qq_57473444.jpg!1',
+    img: 'https://foruda.gitee.com/avatar/1676566705652498709/9913536_xiao-chenago_1676566705.png!avatar200',
     fromName: 'lisi', message: '你好', sendTime: '19:30'},
   {messageId: '2', toName: 'lisi',
-    img: 'https://profile-avatar.csdnimg.cn/cec5c664c7394beca664dc74ed8e3e33_qq_57473444.jpg!1',
+    img: 'https://foruda.gitee.com/avatar/1676566705652498709/9913536_xiao-chenago_1676566705.png!avatar200',
     fromName: 'zhangsan', message: '好久不见', sendTime: '19:50'}
 ])
 const isAudio = ref(false); // 是否激活语音输入

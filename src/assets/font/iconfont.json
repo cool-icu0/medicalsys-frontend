@@ -1,0 +1,72 @@
+{
+  "id": "4563860",
+  "name": "medical",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "7050603",
+      "name": "健康管理",
+      "font_class": "jiankangguanli",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "8288883",
+      "name": "问诊",
+      "font_class": "wenzhen",
+      "unicode": "e856",
+      "unicode_decimal": 59478
+    },
+    {
+      "icon_id": "9335228",
+      "name": "找医生",
+      "font_class": "zhaoyisheng",
+      "unicode": "e711",
+      "unicode_decimal": 59153
+    },
+    {
+      "icon_id": "15994755",
+      "name": "药诊店-药品库管理",
+      "font_class": "yaozhendian-yaopinkuguanlibeifen2",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "22342860",
+      "name": "找医生",
+      "font_class": "zhaoyisheng1",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "23949515",
+      "name": "问诊",
+      "font_class": "wenzhen1",
+      "unicode": "ec64",
+      "unicode_decimal": 60516
+    },
+    {
+      "icon_id": "27564738",
+      "name": "找医生",
+      "font_class": "zhaoyisheng2",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    },
+    {
+      "icon_id": "27696381",
+      "name": "健康管理",
+      "font_class": "jiankangguanli1",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "17605490",
+      "name": "药丸",
+      "font_class": "yaowan",
+      "unicode": "e818",
+      "unicode_decimal": 59416
+    }
+  ]
+}

@@ -7,5 +7,15 @@ import BasicLayouts from "./layout/BasicLayout.vue";
 </template>
 
 <style>
+div /deep/ .van-cell:after {
 
+  border: none;
+
+}
+
+[class*="van-hairline"]::after {
+
+  border: none;
+
+}
 </style>
