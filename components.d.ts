@@ -7,8 +7,11 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    ChatCommon: typeof import('./src/components/ChatCommon.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     IconText: typeof import('./src/components/IconText.vue')['default']
+    Notice: typeof import('./src/components/icon/Notice.vue')['default']
+    QQLogin: typeof import('./src/components/icon/QQLogin.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     VanBackTop: typeof import('vant/es')['BackTop']

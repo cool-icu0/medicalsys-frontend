@@ -12,7 +12,6 @@ import Search from "../pages/Health/Search.vue";
 import MedicineLib from "../pages/Index/MedicineLib.vue";
 import Feature from "../pages/Index/Feature.vue";
 import DoctorInfo from "../pages/Index/DoctorInfo.vue";
-// import ChatRoom from "../pages/Chat/ChatRoom.vue";
 
 //定义一些路由
 const routes =[

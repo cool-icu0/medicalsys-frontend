@@ -4,6 +4,7 @@ import axios from "axios";
 
 const myAxios = axios.create({
     baseURL: 'http://localhost:8039',
+    withCredentials:true
 });
 
 //拦截器

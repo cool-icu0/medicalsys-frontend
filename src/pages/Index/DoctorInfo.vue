@@ -25,7 +25,7 @@
   <!-- 按钮容器 -->
   <div class="button-container">
     <van-button type="primary" @click="goToPayment">确定医生</van-button>
-    <van-button type="default" @click="reselectDoctor">重新选择</van-button>
+    <!--<van-button type="default" @click="reselectDoctor">重新选择</van-button>-->
   </div>
 </template>
 

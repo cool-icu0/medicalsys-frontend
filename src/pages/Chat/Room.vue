@@ -129,9 +129,10 @@ const second = ref(0); // 录音时间
 const messageText = ref(''); // 文本消息
 const messages = ref([]); // 消息列表
 let timer = null;
-onMounted(() =>
-    getData(userAccount),
-)
+onMounted(() =>{
+    getData(userAccount)
+    getTalk()
+})
 const getData = async (userAccount) => {
   const res = await myAxios.get('/select/chat', {params: {userAccount}});
   console.log(res.data, "这个是res的值")
@@ -140,6 +141,12 @@ const getData = async (userAccount) => {
     console.log(res.data, "这个是获取的值")
     user.value.username = res.data
   }
+}
+const getTalk= async ()=>{
+  const res = await myAxios.get('/api/v1/chat');
+  // 假设API返回的数据是一个包含聊天信息的数组
+  // contents.value = res.data.data; // 直接将API返回的数据赋值给contents
+  console.log(res.data.data, "这个是获取的聊天数据");
 }
 const doSearchResult = () => {
 

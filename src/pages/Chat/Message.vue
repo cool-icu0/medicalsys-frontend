@@ -1,11 +1,11 @@
 <template>
-    <!--<ChatRoom/>-->
-  <Room/>
+  <!--<Room/>-->
+  <ChatCommon/>
 </template>
 
 <script setup>
-import ChatRoom from "./ChatRoom.vue";
-import Room from "./Room.vue"
+// import Room from "./Room.vue"
+import ChatCommon from "../../components/ChatCommon.vue";
 </script>
 
 <style scoped>
