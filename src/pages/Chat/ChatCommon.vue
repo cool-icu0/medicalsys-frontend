@@ -2,15 +2,18 @@
 import {nextTick, onMounted, ref} from "vue";
 import {useRoute, useRouter} from "vue-router";
 import {Toast} from "vant";
-import getCurrent from "../services/currentUser";
-import {defaultPicture} from "./userCommon";
+import getCurrent from "../../services/currentUser.ts";
+import {defaultPicture} from "../../components/userCommon.ts";
 import V3Emoji from 'vue3-emoji'
 import 'vue3-emoji/dist/style.css'
-import myAxios from "../config/myAxios.js";
+import myAxios from "../../config/myAxios.js";
 
 const route = useRoute()
 const router = useRouter()
-
+const ChatMethod=ref([
+  { text: '医师', path:'/message/friends',icon:'friends-o' },
+  { text: '提醒', path:'/message/remind',icon:'calendar-o'},
+])
 const stats = ref({
   user: {
     id: 0,
@@ -78,7 +81,7 @@ const stopHeartbeat = () => {
 const chatRoom = ref(null)
 
 onMounted(async () => {
-  // console.log("route.query",route.query)
+  console.log("route.query",route.query)
   let {id, username, userType, teamId, teamName, teamType} = route.query
   stats.value.chatUser.id = Number.parseInt(id)
   stats.value.team.teamId = Number.parseInt(teamId)
@@ -91,14 +94,16 @@ onMounted(async () => {
   } else {
     stats.value.chatType = stats.value.chatEnum.HALL_CHAT
   }
+  //todo
   stats.value.user = await getCurrent()
-  console.log("stats",stats.value)
+  console.log("stats",stats.value.user)
   // 私聊
   if (stats.value.chatType === stats.value.chatEnum.PRIVATE_CHAT) {
     const privateMessage = (await myAxios.post("/chat/privateChat",
         {
           toId: stats.value.chatUser.id,
-        })).data
+        })).data.data
+    console.log("privateMessage",privateMessage)
     privateMessage.forEach(chat => {
       if (chat.isMy === true) {
         createContent(null, chat.formUser, chat.text)
@@ -111,7 +116,7 @@ onMounted(async () => {
   //群聊
   if (stats.value.chatType === stats.value.chatEnum.HALL_CHAT) {
     const hallMessage = (await myAxios.get("/chat/hallChat")).data.data
-    // console.log("hallMessage:",hallMessage)
+    console.log("hallMessage:",hallMessage)
     hallMessage.forEach(chat => {
       if (chat.isMy === true) {
         createContent(null, chat.formUser, chat.text)
@@ -120,6 +125,7 @@ onMounted(async () => {
       }
     })
   }
+  //队伍聊天
   if (stats.value.chatType === stats.value.chatEnum.TEAM_CHAT) {
     const teamMessage = (await myAxios.post("/chat/teamChat",
         {
@@ -141,7 +147,7 @@ onMounted(async () => {
 })
 
 const init = () => {
-  let uid = stats.value.user?.id;
+  let uid = stats.value.user?.data?.userId;
   if (typeof (WebSocket) == "undefined") {
     console.log("您的浏览器不支持WebSocket")
   } else {
@@ -163,12 +169,14 @@ const init = () => {
     };
     //  浏览器端收消息，获得从服务端发送过来的文本消息
     socket.onmessage = function (msg) {
+      // console.log("msg1：",msg)
       if (msg.data === "pong") {
         return;
       }
-      console.log("msg",msg)
+      // console.log("msg",msg)
       // 对收到的json数据进行解析，
       let data = JSON.parse(msg.data)
+      console.log("msgdata：",data)
       if (data.error) {
         Toast.fail(data.error)
         return
@@ -189,6 +197,7 @@ const init = () => {
         if ((stats.value.chatType === data.chatType)) {
           // 大厅
           flag = (data.formUser?.id !== uid)
+          console.log("这个值为formUser：",data.formUser?.id,"这个是uid:",uid)
         }
         // 队伍
         if (stats.value.chatType === data.chatType && data.teamId && stats.value.team.teamId === data.teamId) {
@@ -253,7 +262,9 @@ const send = () => {
     }
   }
 }
-
+const goToPage = (path) => {
+  router.push(path);
+};
 const showUser = (id) => {
   router.push({
     name: 'userShow',
@@ -305,6 +316,16 @@ window.showUser = (id) => {
 
 <template>
   <div class="chat-container">
+    <van-grid column-num="2">
+      <van-grid-item
+          v-for="(item, index) in ChatMethod"
+          :key="index"
+          :icon="item.icon"
+          :text="item.text"
+          @click="goToPage(item.path)"
+      >
+      </van-grid-item>
+    </van-grid>
     <div v-if="route.path==='/public_chat'" style="width: 100%;position: fixed;top: 44px;">
       <van-notice-bar
           left-icon="volume-o"
@@ -314,6 +335,7 @@ window.showUser = (id) => {
 为了维护和谐的网络环境，保护他人合法权益，发言时需要注意以下几点：不得发表违反国家法律法规的言论，包括但不限于煽动颠覆国家政权、宣扬恐怖主义、色情、暴力等内容。不得发布涉及他人隐私、名誉、财产等方面的信息。不得进行人身攻击、诽谤、侮辱、歧视等行为，尊重他人的权利和尊严。不得发布广告、垃圾信息等干扰他人正常使用网络的内容。不得散布虚假信息、恶意传播谣言等行为，避免误导他人。不得违反网络道德，包括但不限于恶意抄袭、剽窃、侵犯知识产权等行为。发言时需要注意措辞、语气，避免引起他人不良情绪或产生误解。"
       />
     </div>
+
     <div style="margin-top: 10px;" v-if="route.path==='/public_chat'">
     </div>
 <!--    <div v-else class="heard">-->
@@ -348,7 +370,7 @@ window.showUser = (id) => {
 </template>
 
 <style>
-@import "../assets/css/chat.css";
+@import "../../assets/css/chat.css";
 
 .emoji-item {
   width: 0;

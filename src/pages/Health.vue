@@ -21,39 +21,39 @@
 
     <!-- 健康生活中心 -->
     <div className="health-center">
-      <h2>健康生活中心</h2>
-      <van-grid column-num="2" square>
+      <h2 style="text-align: center">健康生活中心</h2>
+      <van-grid column-num="2">
         <van-grid-item
             v-for="(item, index) in healthCenterData"
             :key="index"
-            icon="points"
-            text="去答题"
-            @click="goToPage('health-center')"
+            :icon="item.icon"
+            :text="item.text"
+            @click="goToPage(item.path)"
         >
         </van-grid-item>
       </van-grid>
     </div>
 
-    <!-- 健康测评 -->
+    <!-- 个人健康档案 -->
     <div className="health-assessment">
-      <h2>健康测一测</h2>
-      <van-grid column-num="2" square>
+      <h2 style="text-align: center">个人健康档案</h2>
+      <van-grid column-num="2">
         <van-grid-item
             v-for="(item, index) in healthAssessmentData"
             :key="index"
-            icon="service-o"
-            text="测测你的抑郁指数"
-            @click="goToPage('health-assessment')"
+            :icon="item.icon"
+            :text="item.text"
+            @click="goToPage(item.path)"
         >
         </van-grid-item>
       </van-grid>
     </div>
 
     <!-- 体检专区 -->
-    <div className="physical-exam">
-      <h2>体检专区</h2>
-      <van-button type="primary" @click="goToPage('physical-exam')">去看看</van-button>
-    </div>
+    <!--<div className="physical-exam">-->
+    <!--  <h2>体检专区</h2>-->
+    <!--  <van-button type="primary" @click="goToPage('physical-exam')">去看看</van-button>-->
+    <!--</div>-->
   </div>
 </template>
 
@@ -72,11 +72,15 @@ const gridData = ref([
 const healthCenterData = ref([
   // 这里可以添加健康生活中心的数据
   // { text: '...', path: '...' },
+  { text: '健康课堂', path:'/health/class',icon:'tv-o' },
+  { text: '运动打卡', path:'/health/sport',icon:'calendar-o'},
 ]);
 
 const healthAssessmentData = ref([
   // 这里可以添加健康测评的数据
   // { text: '...', path: '...' },
+  {text:'病例清单',icon:'label-o',path:'/health/caseList'},
+  {text:'身体情况表',icon:'bookmark-o',path: '/health/physicalTab'}
 ]);
 
 const onSearch = () => {
@@ -90,7 +94,7 @@ const goToPage = (path) => {
 
 <style scoped>
 #app {
-  padding: 20px;
+  //padding: 20px;
 }
 
 .health-center, .health-assessment, .physical-exam {

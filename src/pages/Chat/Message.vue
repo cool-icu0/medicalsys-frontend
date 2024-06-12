@@ -5,7 +5,7 @@
 
 <script setup>
 // import Room from "./Room.vue"
-import ChatCommon from "../../components/ChatCommon.vue";
+import ChatCommon from "./ChatCommon.vue";
 </script>
 
 <style scoped>
