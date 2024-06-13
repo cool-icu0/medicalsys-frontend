@@ -35,7 +35,7 @@
 import {showToast} from "vant";
 import {useRoute, useRouter} from "vue-router";
 import {ref} from "vue";
-const DEFAULT_TITLE= 'i医康-你的健康管家'
+const DEFAULT_TITLE= '大郎!!!该喝药了 ~'
 const title = ref(DEFAULT_TITLE);
 const router =useRouter();
 const route =useRoute();
@@ -46,12 +46,6 @@ const INDEX_SHOW= ['/']
  */
 router.beforeEach((to, from) => {
   title.value = to.meta.title || DEFAULT_TITLE;
-  // const toPath = to.meta?.path;
-  // const route = routes.find((route) => {
-  //   return toPath == route.path;
-  // })
-  // document.title = "游趣 - 匹配你的趣友"
-  // title.value = route?.title ?? DEFAULT_TITLE;
 })
 const onClickLeft = () => {
   router.back();

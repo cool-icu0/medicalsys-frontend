@@ -14,7 +14,7 @@
       <h2>搜索结果：</h2>
       <van-card v-for="result in data.searchResults"
                 :num="result.quantity"
-                :price="result.unitPrice"
+                :price="result.unitPrice.toFixed(2)"
                 :desc="result.description"
                 :title="result.medicineName"
                 :thumb="result.imgUrl"

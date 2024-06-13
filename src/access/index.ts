@@ -1,12 +1,18 @@
 /**
  * 自动登录
  */
+// @ts-ignore
 import router from "@/router";
+// @ts-ignore
 import store from "@/store";
+// @ts-ignore
 import ACCESS_ENUM from "@/access/accessEnum";
+// @ts-ignore
 import checkAccess from "@/access/checkAccess";
+// @ts-ignore
 import message from "@arco-design/web-vue/es/message";
 
+// @ts-ignore
 router.beforeEach(async (to, from, next) => {
   let loginUser = store.state.user.loginUser;
   // 获取后端的token

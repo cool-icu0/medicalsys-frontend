@@ -8,6 +8,10 @@ export const useUserStore = defineStore({
         userAccount:localStorage.getItem('userAccount') || '',
     }),
     actions: {
+        getUser(user){
+          this.user=user;
+          localStorage.setItem("getUser",user)
+        },
         // 用户登录操作
         login(userAccount) {
             this.isLoggedIn = true;
@@ -24,6 +28,8 @@ export const useUserStore = defineStore({
 
             this.userAccount= '';
             localStorage.removeItem('userAccount');
+            this.user='';
+            localStorage.removeItem('getUser');
         }
     },
 

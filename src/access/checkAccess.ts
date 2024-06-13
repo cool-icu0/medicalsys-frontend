@@ -1,3 +1,4 @@
+// @ts-ignore
 import ACCESS_ENUM from "@/access/accessEnum";
 
 /**

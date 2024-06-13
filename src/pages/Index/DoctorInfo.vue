@@ -27,17 +27,40 @@
     <van-button type="primary" @click="goToPayment">确定医生</van-button>
     <!--<van-button type="default" @click="reselectDoctor">重新选择</van-button>-->
   </div>
+  <div v-if="paymentRes">
+    <!--<div v-html="paymentRes"></div>-->
+    <!--<iframe id="myIframe" :src="paymentRes" width="800" height="600"></iframe><iframe id="myIframe" src="" width="800" height="600"></iframe>-->
+  </div>
 </template>
 
 <script setup>
 import { ref, onMounted } from 'vue';
 import { useRouter } from 'vue-router';
-import MyAxios from '../../config/myAxios'; // 确保引入了自定义的Axios实例
+import myAxios from "../../config/myAxios";
+import getCurrent from "../../services/currentUser";
+import axios from "axios"; // 确保引入了自定义的Axios实例
 
 const router = useRouter();
 const tags = ref(null);
 const doctors = ref([]); // 用于存储医生列表
-
+const uid=ref(0);
+const site='http://localhost:5173/message/myDoc'
+const doctorForm=ref({
+  department:'',
+  doctorName:'',
+  experenceYears:0,
+  hospitalName:'',
+  id:'',
+  imgUrl:'',
+  introduction:'',
+  isDelete:'',
+  position:'',
+  role:0,
+  specialty:'',
+  uid:1,
+  url:site
+})
+const paymentRes = ref()
 onMounted(() => {
   // 获取查询参数中的'tags'
   tags.value = router.currentRoute.value.query.tags;
@@ -51,9 +74,10 @@ onMounted(() => {
 
 const getDoctorsByDepartmentName = async (name) => {
   try {
-    const response = await MyAxios.get(`/api/v1/doctor/selectDepartmentByDepartmentName/${name}`);
+    const response = await myAxios.get(`/api/v1/doctor/selectDepartmentByDepartmentName/${name}`);
     // 假设API返回的数据是一个包含医生信息的数组
     doctors.value = response.data.data;
+    // console.log("doctor表：",doctors.value)
   } catch (error) {
     console.error('Error fetching doctors:', error);
   }
@@ -62,9 +86,45 @@ const getDoctorsByDepartmentName = async (name) => {
  * 进入付款流程
  * @returns {{}}
  */
-const goToPayment = ()=>({
+const goToPayment = async ()=>{
+  tags.value = router.currentRoute.value.query.tags;
+  // console.log("tags.value",tags.value); // 打印tags的值，例如 '小李'
+  const response = await myAxios.get(`/api/v1/doctor/selectDepartmentByDepartmentName/${tags.value}`);
+  // 假设API返回的数据是一个包含医生信息的数组
+  doctors.value = response.data.data[0];
+  console.log("doctor表：",doctors.value)
+  const user = await  myAxios.get("/user/current")
+  uid.value=user.data.data.userId
+  // console.log("user",uid.value);
+  console.log("doctors.value:",doctors.value)
+  // console.log("department:",doctors.value.department)
+  doctorForm.department=doctors.value.department
+  doctorForm.doctorName=doctors.value.doctorName
+  doctorForm.experenceYears=doctors.value.experenceYears
+  doctorForm.hospitalName=doctors.value.hospitalName
+  doctorForm.id=doctors.value.id
+  doctorForm.imgUrl=doctors.value.imgUrl
+  doctorForm.introduction=doctors.value.introduction
+  doctorForm.isDelete=doctors.value.isDelete
+  doctorForm.position=doctors.value.position
+  doctorForm.role=doctors.value.role
+  doctorForm.specialty=doctors.value.specialty
+  doctorForm.uid=uid.value
+  doctorForm.url= site
+  console.log("doctorForm:",doctorForm)
+  // window.open("http://47.98.213.9:8039/api/v1/pay/toAliPay2?");
+  const Furl="http://47.98.213.9:8039/api/v1/pay/toAliPay2?"
+  const params=new URLSearchParams(doctorForm).toString()
+  // const res = await axios.get(`${Furl},${params}`,{ headers: {
+  //     'Content-Type': 'application/x-www-form-urlencoded',
+  //     // 其他可能需要的请求头
+  //   }})
+  // console.log("res:",res)
+  // paymentRes.value = `${Furl},${params}`
+  // return res
+  window.open(`${Furl},${params}`)
 
-})
+}
 const reselectDoctor = ()=>{
   router.push({
     path: '/index/feature'

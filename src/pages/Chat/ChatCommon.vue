@@ -11,9 +11,11 @@ import myAxios from "../../config/myAxios.js";
 const route = useRoute()
 const router = useRouter()
 const ChatMethod=ref([
+  { text: '私聊',path:'/message/myDoc',icon: 'manager-o' },
   { text: '医师', path:'/message/friends',icon:'friends-o' },
   { text: '提醒', path:'/message/remind',icon:'calendar-o'},
 ])
+let RoleStatus=ref(0)
 const stats = ref({
   user: {
     id: 0,
@@ -34,7 +36,7 @@ const stats = ref({
     // 大厅
     HALL_CHAT: 3
   },
-  chatType: null,
+  chatType: 0,
   team: {
     teamId: 0,
     teamName: ''
@@ -97,6 +99,8 @@ onMounted(async () => {
   //todo
   stats.value.user = await getCurrent()
   console.log("stats",stats.value.user)
+  RoleStatus=stats.value.user.data.role
+  console.log("RoleStatus：",RoleStatus)
   // 私聊
   if (stats.value.chatType === stats.value.chatEnum.PRIVATE_CHAT) {
     const privateMessage = (await myAxios.post("/chat/privateChat",
@@ -273,7 +277,15 @@ const showUser = (id) => {
     }
   })
 }
-
+const OpenMethod=(id,username)=>{
+  router.push({
+    path:"/index/prescription",
+    query:{
+      id:id,
+      username:username
+    }
+  })
+}
 /**
  * 这个方法是用来将 json的聊天消息数据转换成 html的。
  */
@@ -316,7 +328,7 @@ window.showUser = (id) => {
 
 <template>
   <div class="chat-container">
-    <van-grid column-num="2">
+    <van-grid column-num="3">
       <van-grid-item
           v-for="(item, index) in ChatMethod"
           :key="index"
@@ -348,8 +360,10 @@ window.showUser = (id) => {
           :recent="true"
           @click-emoji="appendText"
           :options-name="optionsName"
-          size="big"
+
       />
+      <!--v-if="RoleStatus===1 && stats.value.chatType === stats.value.chatEnum.PRIVATE_CHAT"-->
+      <van-button v-if="RoleStatus===1" class="chufangB" type="success" @click="OpenMethod(route.query.id,route.query.username)">开处方</van-button>
       <textarea placeholder="聊点什么吧...." v-model="stats.text" @keyup.enter="send" class="input-text"></textarea>
       <button class="input-send-button" @click="send">
         <svg class="icon" style="width: 45px;height: 45px;vertical-align: middle;fill: currentColor;overflow: hidden;"
@@ -402,5 +416,7 @@ window.showUser = (id) => {
   cursor: pointer;
   margin-left: 5px;
 }
-
+.chufangB{
+  height: 80px;
+}
 </style>

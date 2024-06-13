@@ -20,6 +20,7 @@ import {useRoute, useRouter} from "vue-router";
 import {ref, watch} from "vue";
 import myAxios from "../../config/myAxios.js";
 import {useUserStore} from "../../config/store.js";
+import {showToast} from "vant";
 
 const route = useRoute();
 const router = useRouter();
@@ -43,7 +44,14 @@ const onSubmit= async (values)=>{
   const res = await myAxios.post('/user/update',
       user.value,
   )
-  console.log("user",user)
+  console.log("修改后返回的值",res.data)
+  if (res.data.code===200){
+    showToast({
+      message: '修改成功',
+      icon: 'like-o',
+    })
+    await router.back()
+  }
 }
 watch(
     () => editUser.value.currentValue,

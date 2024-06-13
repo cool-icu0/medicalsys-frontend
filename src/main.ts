@@ -1,6 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-
+import 'vant/lib/index.css'
 import * as VueRouter from 'vue-router';
 import routes from "./config/router";
 import {createPinia} from "pinia";

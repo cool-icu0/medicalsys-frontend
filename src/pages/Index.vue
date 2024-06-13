@@ -3,7 +3,8 @@
     <div class="header">
       <!-- 假设有一个用户头像和名称 -->
       <div class="user-info">
-        <img src="https://foruda.gitee.com/avatar/1676566705652498709/9913536_xiao-chenago_1676566705.png!avatar200" alt="User" class="avatar" />
+        <!--{{user.avatarUrl}}-->
+        <img :src=userAvatar class="avatar" />
       </div>
       <div class="search-bar">
         <!-- Vant UI 的搜索框 -->
@@ -33,11 +34,11 @@
             :key="item.text"
             :icon="item.icon"
             :text="item.text"
-            :to="`/${item.route}`"
+            :to="`${item.route}`"
         />
       </van-grid>
 
-      <!-- 优惠券和活动区域 -->
+      <!-- 区域 -->
       <van-cell-group>
         <van-cell title="专病专科" value="查看全部" is-link />
         <van-grid column-num="4" icon-size="30px" border="border" clickable>
@@ -54,7 +55,6 @@
       <van-list>
         <van-cell title="秒送" is-link />
         <van-cell title="到家快检" is-link />
-        <van-cell title="京东体检" is-link />
         <van-cell title="签到奖励" is-link />
         <van-cell title="用药助手" is-link />
         <!-- 更多功能可以继续添加 -->
@@ -64,8 +64,20 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import {useRouter} from "vue-router";
+
+const router = useRouter();
+import {onMounted, ref} from 'vue';
 import "../assets/font/iconfont.css";
+import getCurrent from "../services/currentUser";
+const userAvatar= ref('');
+onMounted(async () => {
+  const user = await getCurrent()
+  userAvatar.value = user.data.userAvatar
+  console.log("userAvatar", userAvatar)
+})
+
+const DEFAULT_IMG="https://foruda.gitee.com/avatar/1676566705652498709/9913536_xiao-chenago_1676566705.png!avatar200";
 const images = [
   "https://img0.baidu.com/it/u=3358848204,1936258606&fm=253&fmt=auto&app=120&f=JPEG?w=1421&h=800",
   "https://img2.baidu.com/it/u=3012806272,1276873993&fm=253&fmt=auto&app=138&f=JPEG?w=800&h=500",
@@ -74,25 +86,26 @@ const images = [
 ]
 const features = ref([
   // 功能模块数据，需要根据实际图标和文本替换
-  { icon: 'friends-o', text: '极速问诊', route: 'index/feature' }, // 添加route属性
+  { icon: 'friends-o', text: '极速问诊', route: '/index/feature' }, // 添加route属性
   // { icon: 'like', text: '找医生', route: 'find-doctor' },
-  { icon: 'shopping-cart-o', text: '药品库', route: 'index/medicineLib' },
-  { icon: 'like-o', text: '健康管理', route: 'index/healthManagement' },
+  { icon: 'shopping-cart-o', text: '药品库', route: '/index/medicineLib' },
+  { icon: 'like-o', text: '健康管理', route: '/health' },
   // 更多功能模块可以继续添加
 ]);
 const specialist = ref([
-  { icon: 'manager-o', text: '私人医生' },
-  { icon: 'notes-o', text: '专病义诊' },
-  { icon: 'cashier-o', text: '保险平台' },
-  { icon: 'todo-list-o', text: '报告解读' },
-  { icon: 'cash-o', text: '银联支付' },
-  { icon: 'shop-o', text: '中医医院' },
-  { icon: 'closed-eye', text: '心理咨询' },
-  { icon: 'question-o', text: '联系客服' },
+  { icon: 'manager-o', text: '私人医生',path:'/message/myDoc' },
+  { icon: 'notes-o', text: '专病义诊' ,path: '/'},
+  { icon: 'cashier-o', text: '医疗百科',path: '/index/medicalAny' },
+  { icon: 'todo-list-o', text: '报告解读',path: '/' },
+  { icon: 'cash-o', text: '银联支付',path: '/' },
+  { icon: 'shop-o', text: '中医医院',path: '/' },
+  { icon: 'closed-eye', text: '心理咨询',path: '/' },
+  { icon: 'question-o', text: '联系客服',path: '/' },
 ])
 
 const onFeatureClick = (item) => {
   console.log('Clicked feature:', item.text);
+  router.push(item.path)
   // 可以在这里添加点击模块后的操作
 };
 </script>
